@@ -60,7 +60,7 @@ void TLC5940_Init(void) {
 	SPCR = (1 << SPE) | (1 << MSTR);
 	SPSR = (1 << SPI2X);
 
-  // Timer3 for plusing GSCLK to drive the chip
+  // Timer3 for pulsing GSCLK to drive the chip
   TCCR3A = (1 << COM3A1)      // set on BOTTOM, clear on OCR3A (non-inverting), and output on OC3A
            | (1 << WGM31);    // Fast pwm with ICR3 top
   OCR3A = 0;                // duty factor (as short a pulse as possible)
