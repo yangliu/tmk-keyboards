@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 )
 
 /* Backlight */
-#define BACKLIGHT_LEVELS 27
+#define BACKLIGHT_LEVELS 10 
 
 
 /*

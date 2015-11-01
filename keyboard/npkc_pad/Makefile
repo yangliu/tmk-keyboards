@@ -140,9 +140,6 @@ XLAT_PIN = PB5
 # which should be appended to the definition of COMPILE below
 TLC5940_DEFINES = -DTLC5940_N=$(TLC5940_N) \
                   -DTLC5940_MANUAL_DC_FUNCS=$(TLC5940_MANUAL_DC_FUNCS) \
-									-DGSCLK_DDR=$(GSCLK_DDR) \
-                  -DGSCLK_PORT=$(GSCLK_PORT) \
-                  -DGSCLK_PIN=$(GSCLK_PIN) \
 									-DSIN_DDR=$(SIN_DDR) \
                   -DSIN_PORT=$(SIN_PORT) \
                   -DSIN_PIN=$(SIN_PIN) \
