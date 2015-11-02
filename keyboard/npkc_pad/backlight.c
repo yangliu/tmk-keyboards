@@ -187,7 +187,7 @@ void TLC5940_RefreshGSData(void) {
 
 void backlight_set(uint8_t level){
   current_level = level;
-  print("Backlight Set, level: "); print_dec(level); print("\n");
+  // print("Backlight Set, level: "); print_dec(level); print("\n");
   if (level>0) {
     TLC5940_Init();
     TLC5940_Enable();
