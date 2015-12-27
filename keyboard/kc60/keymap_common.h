@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "print.h"
 #include "debug.h"
 #include "keymap.h"
-
+#include "rgblight.h"
 
 extern const uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS];
 extern const uint16_t fn_actions[];
@@ -80,5 +80,6 @@ extern const uint16_t fn_actions[];
     K30, NO,  K32, K33, K34, K35, K36, K37, K38, K39, K3A, K3B, K3C, K3D, \
     K40, K41, K42,           K45,                K49, K4A, K4B, K4C, K4D  \
 )
+
 
 #endif

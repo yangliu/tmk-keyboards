@@ -52,16 +52,16 @@ KEYMAP_ANSI(
      * |-----------------------------------------------------------|
      * |      |Lef|Dow|Rig|   |   |Lef|Dow|Up |Rig|   |   |        |
      * |-----------------------------------------------------------|
-     * |        |Fn3|Fn4|Fn5|   |  |PgDn|   |VoD|Mut|VoU|          |
+     * |        |Fn3|Fn4|Fn5|FN7|  |PgDn|   |VoD|Mut|VoU|          |
      * |-----------------------------------------------------------|
-     * |    |    |    |Fn6                     |App |Hom |    |End |
+     * |    |    |    |                        |App |Hom |    |End |
      * `-----------------------------------------------------------'
      */
     KEYMAP_ANSI(
         GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, DEL,  \
         TRNS,TRNS,UP,  TRNS,CALC,INS ,TRNS,PGUP,TRNS, TRNS,PSCR,SLCK,PAUS,TRNS, \
         TRNS,LEFT,DOWN,RGHT,TRNS,TRNS,LEFT,DOWN,UP,  RGHT,TRNS,TRNS,      TRNS, \
-        TRNS,     FN3, FN4, FN5, TRNS, TRNS, PGDN,TRNS,VOLD,MUTE,VOLU,    TRNS, \
+        TRNS,     FN3, FN4, FN5, TRNS,TRNS,PGDN,TRNS,VOLD,MUTE,VOLU,      TRNS, \
         TRNS,TRNS,TRNS,          TRNS,                     APP, HOME,TRNS,END),
     /* Keymap 3: Fn1 Layer
      * ,-----------------------------------------------------------.
@@ -80,7 +80,7 @@ KEYMAP_ANSI(
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS,TRNS,TRNS,TRNS,  \
         TRNS,TRNS,UP,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS,TRNS,TRNS,TRNS,TRNS, \
         TRNS,LEFT,DOWN,RGHT,TRNS,TRNS,LEFT,DOWN,UP,  RGHT,TRNS,TRNS,      TRNS, \
-        TRNS,    TRNS,TRNS,TRNS, TRNS, TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,      UP, \
+        TRNS,    FN7,FN14,FN8,FN9, FN10, FN11, FN12,FN13,TRNS,TRNS,      UP, \
         TRNS,TRNS,TRNS,         TRNS,                     FN6, LEFT,DOWN,RGHT),
 };
 
@@ -90,6 +90,14 @@ KEYMAP_ANSI(
 /* id for user defined function/macro */
 enum function_id {
     SHIFT_ESC,
+    RGBLED_TOGGLE,
+    RGBLED_INCREASE_HUE,
+    RGBLED_DECREASE_HUE,
+    RGBLED_INCREASE_SAT,
+    RGBLED_DECREASE_SAT,
+    RGBLED_INCREASE_VAL,
+    RGBLED_DECREASE_VAL,
+    RGBLED_STEP_MODE,
 };
 
 enum macro_id {
@@ -123,7 +131,49 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
                 }
             }
             break;
-    }
+      case RGBLED_TOGGLE:
+        //led operations
+        if (record->event.pressed) {
+          rgblight_toggle();
+        }
+
+        break;
+      case RGBLED_INCREASE_HUE:
+        if (record->event.pressed) {
+          rgblight_increase_hue();
+        }
+        break;
+      case RGBLED_DECREASE_HUE:
+        if (record->event.pressed) {
+          rgblight_decrease_hue();
+        }
+        break;
+      case RGBLED_INCREASE_SAT:
+        if (record->event.pressed) {
+          rgblight_increase_sat();
+        }
+        break;
+      case RGBLED_DECREASE_SAT:
+        if (record->event.pressed) {
+          rgblight_decrease_sat();
+        }
+        break;
+        case RGBLED_INCREASE_VAL:
+          if (record->event.pressed) {
+            rgblight_increase_val();
+          }
+          break;
+        case RGBLED_DECREASE_VAL:
+          if (record->event.pressed) {
+            rgblight_decrease_val();
+          }
+          break;
+        case RGBLED_STEP_MODE:
+          if (record->event.pressed) {
+            rgblight_step();
+          }
+          break;
+  }
 }
 
 
@@ -155,4 +205,12 @@ const uint16_t fn_actions[] PROGMEM = {
     [4] = ACTION_BACKLIGHT_TOGGLE(),
     [5] = ACTION_BACKLIGHT_INCREASE(),
     [6] = ACTION_LAYER_OFF(3, ON_RELEASE),
+    [7] = ACTION_FUNCTION(RGBLED_TOGGLE),
+    [8] = ACTION_FUNCTION(RGBLED_INCREASE_HUE),
+    [9] = ACTION_FUNCTION(RGBLED_DECREASE_HUE),
+    [10]= ACTION_FUNCTION(RGBLED_INCREASE_SAT),
+    [11]= ACTION_FUNCTION(RGBLED_DECREASE_SAT),
+    [12]= ACTION_FUNCTION(RGBLED_INCREASE_VAL),
+    [13]= ACTION_FUNCTION(RGBLED_DECREASE_VAL),
+    [14]= ACTION_FUNCTION(RGBLED_STEP_MODE),
 };

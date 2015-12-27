@@ -22,11 +22,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <avr/io.h>
 #include <util/delay.h>
-#include <avr/interrupt.h> 
+#include <avr/interrupt.h>
 #include <stdint.h>
 #include <avr/pgmspace.h>
 
 #include "backlight.h"
+
+#ifdef RGBLIGHT_ENABLE
+#include "rgblight.h"
+#endif
+
+
 
 #define DEFAULT_ACCURACY  256
 #define PWM_LED_TIMER_TOP F_CPU/(256*64)
@@ -95,7 +101,7 @@ void backlight_set(uint8_t level)
     //PORTB |= (1<<6);
     //pwm_led_init();
    // pwm_led_enable();
-    
+
     if(level > 0)
     {
         pwm_led_init();
@@ -103,11 +109,18 @@ void backlight_set(uint8_t level)
     }
     else
     {
-        
+
         pwm_led_disable();
         close_led();
     }
-    
+
+#ifdef RGBLIGHT_ENABLE
+    static rgblight_init_once = 0;
+    if (!rgblight_init_once) {
+      rgblight_init();
+    }
+#endif
+
 }
 
 
@@ -119,15 +132,23 @@ void tick(void)
     }
     else if(current_level == 2)
     {
+        duty_cycle = 130;
+    }
+    else if(current_level == 3)
+    {
+        duty_cycle = 190;
+    }
+    else if(current_level == 4)
+    {
+        duty_cycle = 255;
+    }
+    else if(current_level == 5)
+    {
         pos++;
         duty_cycle = pgm_read_byte(&breathing_table[0][pos]);
         if(pos >= 0xff){
             pos = 0;
         }
-    }
-    else if(current_level == 3)
-    {
-        duty_cycle = 255;
     }
 }
 
@@ -140,7 +161,7 @@ ISR(TIMER1_COMPA_vect)
         open_led();
         tick();
     }
-    if (acc == duty_cycle) 
+    if (acc == duty_cycle)
     {
         close_led();
     }
@@ -160,7 +181,7 @@ ISR(TIMER1_COMPA_vect)
         open_led();
         step++;
     }
-    if (acc==pgm_read_byte(&breathing_table[step])) 
+    if (acc==pgm_read_byte(&breathing_table[step]))
     {
         close_led();
     }

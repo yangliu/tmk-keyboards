@@ -48,7 +48,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 )
 
 /* number of backlight levels */
-#define BACKLIGHT_LEVELS 3
+#define BACKLIGHT_LEVELS 5
+
+/* ws2812 RGB LED */
+#define RGBLIGHT_ENABLE 1
+#define ws2812_PORTREG  PORTF
+#define ws2812_DDRREG   DDRF
+#define ws2812_pin PF4
+#define RGBLED_NUM 14     // Number of LEDs
+#ifndef RGBLIGHT_HUE_STEP
+#define RGBLIGHT_HUE_STEP 10
+#endif
+#ifndef RGBLIGHT_SAT_STEP
+#define RGBLIGHT_SAT_STEP 17
+#endif
+#ifndef RGBLIGHT_VAL_STEP
+#define RGBLIGHT_VAL_STEP 17
+#endif
 
 /*
  * Feature disable options
